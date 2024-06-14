@@ -1,14 +1,21 @@
-name: Optimize images
-on: pull_request
+name: Crush images
+on:
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '**.jpg'
+      - '**.jpeg'
+      - '**.png'
+      - '**.gif'
 jobs:
-  build:
-    name: calibreapp/image-actions
+  crush:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@master
-
-      - name: Compress Images
-        uses: calibreapp/image-actions@master
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Crush images
+        uses: crush-pics/crush-pics-github-action@master
         with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          api-key: ${{ secrets.CRUSH_API_KEY }}
